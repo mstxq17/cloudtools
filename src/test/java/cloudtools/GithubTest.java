@@ -8,4 +8,5 @@ public class GithubTest {
 	public void Test() {
 		System.out.println("Hello world!");
 	}
+
 }
