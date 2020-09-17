@@ -1,126 +1,153 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.xq17</groupId>
-  <artifactId>cloudtools</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>cloudtools Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-	<!-- 单元测试依赖包 -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    
-    <!-- mysql的驱动包 -->
-    <dependency>
-	    <groupId>mysql</groupId>
-	    <artifactId>mysql-connector-java</artifactId>
-	    <version>8.0.20</version>
-	</dependency>
-	
-	<!--  mybatis的依赖包 -->
-	<dependency>
-	    <groupId>org.mybatis</groupId>
-	    <artifactId>mybatis</artifactId>
-	    <version>3.5.4</version>
-	</dependency>
-	
-	
-	<!--  mybatis-spring整合包 -->
-	<dependency>
-	    <groupId>org.mybatis</groupId>
-	    <artifactId>mybatis-spring</artifactId>
-	    <version>2.0.4</version>
-	</dependency>
-	
-	<!-- spring mvc -->
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-webmvc</artifactId>
-	    <version>5.2.4.RELEASE</version>
-	</dependency>
-	
-	<dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-context-support</artifactId>
-    <version>5.2.4.RELEASE</version>
-</dependency>
-	
-	<!-- 切面依赖包  -->
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-aspects</artifactId>
-	    <version>5.2.4.RELEASE</version>
-	</dependency>
-	
-	<!-- spring获取数据源的依赖包 -->
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-jdbc</artifactId>
-	    <version>5.2.4.RELEASE</version>
-	</dependency>
-	
-	<!-- 数据库连接池依赖包-->
-	<dependency>
-	    <groupId>commons-dbcp</groupId>
-	    <artifactId>commons-dbcp</artifactId>
-	    <version>1.4</version>
-	</dependency>
-	
-	<!-- json依赖包 -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-core</artifactId>
-	    <version>2.11.0</version>
-	</dependency>
-	
-	<!-- json数据绑定依赖包 -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-databind</artifactId>
-	    <version>2.11.0</version>
-	</dependency>
-	
-	<!-- 日志包 -->
-	<dependency>
-	    <groupId>org.apache.logging.log4j</groupId>
-	    <artifactId>log4j-core</artifactId>
-	    <version>2.13.2</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>org.apache.logging.log4j</groupId>
-	    <artifactId>log4j-slf4j-impl</artifactId>
-	    <version>2.13.2</version>
-	</dependency>
-	<!-- 文件上传依赖包 -->
-	<dependency>
-	    <groupId>commons-fileupload</groupId>
-	    <artifactId>commons-fileupload</artifactId>
-	    <version>1.4</version>
-	</dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.xq17</groupId>
+	<artifactId>cloudtools</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>cloudtools Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<!-- 单元测试依赖包 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
 
-	<!-- 邮件 -->	
-	<dependency>
-	    <groupId>javax.mail</groupId>
-	    <artifactId>mail</artifactId>
-	    <version>1.4.7</version>
-	</dependency>
-	
-	<!--  Servlet 安装包 -->
-	<dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>javax.servlet-api</artifactId>
-	    <version>4.0.0</version>
-	    <scope>provided</scope>
-	</dependency>
-  </dependencies>
-  <build>
-    <finalName>cloudtools</finalName>
-  </build>
+		<!--引入二维码依赖 -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+
+		<!--引入FTP 依赖 -->
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+
+		<!-- mysql的驱动包 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.20</version>
+		</dependency>
+
+		<!-- mybatis的依赖包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.5.4</version>
+		</dependency>
+
+
+		<!-- mybatis-spring整合包 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+
+		<!-- spring mvc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>5.2.4.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>5.2.4.RELEASE</version>
+		</dependency>
+
+		<!-- 切面依赖包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>5.2.4.RELEASE</version>
+		</dependency>
+
+		<!-- spring获取数据源的依赖包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.2.4.RELEASE</version>
+		</dependency>
+
+		<!-- 数据库连接池依赖包 -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- json依赖包 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+		<!-- json数据绑定依赖包 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+
+		<!-- 日志包 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.13.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.13.2</version>
+		</dependency>
+		<!-- 文件上传依赖包 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<!-- 邮件 -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+		<!-- Servlet 安装包 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- swagger-ui 注释 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>cloudtools</finalName>
+	</build>
 </project>

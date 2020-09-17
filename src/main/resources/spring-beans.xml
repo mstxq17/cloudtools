@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd">
+        
+        <!-- 需要扫描包路径 -->
+        <context:component-scan base-package="com.xq17.cloudtools">
+        	<!-- 以下这些不需要扫描 -->
+        	<context:exclude-filter type="annotation"  expression="org.springframework.web.bind.annotation.GetMapping" />
+        	<context:exclude-filter type="annotation"  expression="org.springframework.web.bind.annotation.PathVariable" />
+        	<context:exclude-filter type="annotation"  expression="org.springframework.web.bind.annotation.PostMapping" />
+        	<context:exclude-filter type="annotation"  expression="org.springframework.web.bind.annotation.RequestMapping" />
+        	<context:exclude-filter type="annotation"  expression="org.springframework.web.bind.annotation.RequestBody" />
+        	<context:exclude-filter type="annotation"  expression="org.springframework.web.bind.annotation.RequestParam" />
+       </context:component-scan>
+        
+        <!-- 配置资源文件 -->
+        <context:property-placeholder location="classpath:db.properties" />
+        
+        <!-- 配置数据源datasource -->
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        	<property name="driverClassName" value="${jdbc.driver}"></property>
+        	<property name="url" value="${jdbc.url}"></property>
+        	<property name="username" value="${jdbc.username}"></property>
+        	<property name="password" value="${jdbc.password}"></property>
+        	
+        	<!--  连接池的初始化大小 -->
+        	<property name="initialSize" value="5"></property>
+        </bean>
+        
+        <!-- sqlSessionFactory对象的配置 -->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        	<property name="dataSource" ref="dataSource"></property>
+        	
+        	<!-- 映射文件路径 -->
+        	<property name="mapperLocations" value="classpath:mapper/*Mapper.xml"></property>
+        	
+        	<!-- 需要启用别名的包路径 -->
+        	<property name="typeAliasesPackage" value="com.xq17.cloudtools.bean"></property>
+        </bean>
+        
+        <!-- 配置映射文件与接口的关联，底层会采用动态处理方式返回该接口的实现类 -->
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        	<!-- 映射文件对应的接口的包路径 -->
+        	<property name="basePackage" value="com.xq17.cloudtools.mapper"></property>
+        	
+        	<!-- 实现sql操作的sqlsessionFactory -->
+        	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"> </property>
+        </bean>
+        <!-- 配置事务 -->
+        <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        	<!-- 需要启用的数据源 -->
+        	<property name="dataSource" ref="dataSource"></property>
+        </bean>
+        
+        <!-- 配置文件上传 -->
+        <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        	<!--  设置编码集 -->
+        	<property name="defaultEncoding" value="utf-8"></property>
+        	<!-- 上传文件的总大小 -->
+        	<property name="maxUploadSize" value="1048576000"></property>
+        	<!-- 可使用的内存缓存大小 -->
+        	<property name="maxInMemorySize" value="8192"></property>
+        </bean>
+        
+        <!-- 邮件配置信息 -->
+        <bean id="sendEmailUtil" class="com.xq17.cloudtools.utils.SendEmailUtil">
+        	<property name="sendEmail" value="121582414@qq.com"></property>
+        	<property name="pwd" value="khxqasaseithbide"></property>
+        </bean>
+        
+        <!-- ftp配置信息 -->
+        <bean id="ftpUtil" class="com.xq17.cloudtools.utils.FtpUtil"> 
+        	<property name="HOST" value="127.0.0.1"></property>
+        	<property name="PORT" value="21"></property>
+        	<property name="USERNAME" value=""></property>
+        	<property name="PASSWORD" value=""></property>
+        	<property name="BASEPATH" value=""></property>
+        </bean>
+</beans>
