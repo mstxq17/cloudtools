@@ -51,7 +51,7 @@
   
   <context-param>
   	<param-name>uploadPath</param-name>
-  	<param-value>../temp_files</param-value>
+  	<param-value>user_code</param-value>
   </context-param>
   
   <welcome-file-list>

@@ -23,11 +23,11 @@ public class FtpUtil {
 	/**
 	 * FTP服务器hostname
 	 */
-	private static String HOST;
-	private static int PORT;
-	private static String USERNAME;
-	private static String PASSWORD;
-	private static String BASEPATH;
+	private static String HOST = "127.0.0.1";
+	private static int PORT = 21;
+	private static String USERNAME = "anonymous";
+	private static String PASSWORD = "";
+	private static String BASEPATH = "";
 	private static FTPClient ftp;
 
 	/**
@@ -324,4 +324,5 @@ public class FtpUtil {
 		}
 		return flag;
 	}
+
 }

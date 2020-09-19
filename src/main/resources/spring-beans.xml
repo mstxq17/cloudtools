@@ -76,7 +76,7 @@
         	<property name="pwd" value="khxqasaseithbide"></property>
         </bean>
         
-        <!-- ftp配置信息 -->
+        <!-- ftp配置信息 
         <bean id="ftpUtil" class="com.xq17.cloudtools.utils.FtpUtil"> 
         	<property name="HOST" value="127.0.0.1"></property>
         	<property name="PORT" value="21"></property>
@@ -84,4 +84,5 @@
         	<property name="PASSWORD" value=""></property>
         	<property name="BASEPATH" value=""></property>
         </bean>
+        -->
 </beans>

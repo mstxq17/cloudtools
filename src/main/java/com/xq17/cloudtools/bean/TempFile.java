@@ -14,19 +14,37 @@ import java.util.Date;
 
 public class TempFile implements Serializable {
 
-	private static final long serialVersionUID = 2513790036263250227L;
+	private static final long serialVersionUID = -8533832947949825115L;
 	private Integer fileId;
+	private String fileName;
 	private String size;
 	private Date uploadTime;
 	private String filePath;
-	private String fileName;
+	private String sessionId;
 
-	public TempFile(String size, Date uploadTime, String filePath, String fileName) {
+	public TempFile(String size, Date uploadTime, String filePath, String fileName, String sessionId) {
 		super();
 		this.size = size;
 		this.uploadTime = uploadTime;
 		this.filePath = filePath;
 		this.fileName = fileName;
+		this.sessionId = sessionId;
+	}
+
+	public TempFile(Integer fileId, String fileName, String size, Date uploadTime, String filePath, String sessionId) {
+		super();
+		this.fileId = fileId;
+		this.fileName = fileName;
+		this.size = size;
+		this.uploadTime = uploadTime;
+		this.filePath = filePath;
+		this.sessionId = sessionId;
+	}
+
+	@Override
+	public String toString() {
+		return "TempFile [fileId=" + fileId + ", size=" + size + ", uploadTime=" + uploadTime + ", filePath=" + filePath
+				+ ", fileName=" + fileName + ", sessionId=" + sessionId + "]";
 	}
 
 	@Override
@@ -36,6 +54,7 @@ public class TempFile implements Serializable {
 		result = prime * result + ((fileId == null) ? 0 : fileId.hashCode());
 		result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
 		result = prime * result + ((filePath == null) ? 0 : filePath.hashCode());
+		result = prime * result + ((sessionId == null) ? 0 : sessionId.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
 		result = prime * result + ((uploadTime == null) ? 0 : uploadTime.hashCode());
 		return result;
@@ -64,6 +83,11 @@ public class TempFile implements Serializable {
 			if (other.filePath != null)
 				return false;
 		} else if (!filePath.equals(other.filePath))
+			return false;
+		if (sessionId == null) {
+			if (other.sessionId != null)
+				return false;
+		} else if (!sessionId.equals(other.sessionId))
 			return false;
 		if (size == null) {
 			if (other.size != null)
@@ -116,6 +140,14 @@ public class TempFile implements Serializable {
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 
 }
