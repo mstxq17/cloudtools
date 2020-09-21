@@ -1,16 +1,25 @@
 package com.xq17.cloudtools.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.xq17.cloudtools.bean.TempFile;
 import com.xq17.cloudtools.service.TempFileService;
 import com.xq17.cloudtools.utils.FtpUtil;
+import com.xq17.cloudtools.utils.HttpUtil;
 import com.xq17.cloudtools.utils.QRCodeUtil;
 import com.xq17.cloudtools.utils.StringUtil;
 import com.xq17.cloudtools.vo.ExceptionMsg;
@@ -42,8 +52,41 @@ import com.xq17.cloudtools.vo.ResultVo;
 @RequestMapping("/file")
 public class FileController {
 
+
 	@Autowired
 	TempFileService tfService;
+
+	/**
+	 * 
+	 * @Title: getToken @Description: 获取114.mx的token @param @return 参数 @return
+	 * ResultVo 返回类型 @throws
+	 */
+	@GetMapping("/api/getToken")
+	public ResultVo getToken() {
+		String apiURL = "http://114.mx";
+		String token = "";
+		Map<String, Object> map = new HashMap<String, Object>();
+ 		try {
+			Scanner s = new Scanner(new URL(apiURL).openStream(), "utf-8");
+			String rspHtml = s.useDelimiter("\\A").next();
+			// System.out.println(rspHtml);
+			Pattern pattern = Pattern.compile("name=\"token\" value=\"(.*?)\"");
+			Matcher m = pattern.matcher(rspHtml);
+			if (m.find()) {
+				token = m.group(1);
+				map.put("token", token);
+				return new ResultVo(200, "成功获取到Token", map);
+			}
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResultVo(301,"获取接口Token出错!", "");
+	}
 
 	/**
 	 * 
@@ -58,13 +101,69 @@ public class FileController {
 	    * @throws
 	 */
 	@GetMapping("/share")
-	public ResultVo shareFile(String t, Integer f, String p, String flag) {
-		if (StringUtil.checkStringNull(t, p, flag) || f == null) {
+	public ResultVo shareFile(String t, Integer f, String p, Integer flag, HttpServletRequest request,
+			HttpServletResponse response) {
+        String fileNameTemp = "";
+        String remotePath = "";
+        String fileName = "";
+		if (StringUtil.checkStringNull(t, p) || f == null || flag == null) {
 			return new ResultVo(301, "参数错误", "");
 		}
 
+		// 上传临时文件
+		if (flag == 1) {
+
+		} else if (flag == 2) {
+			TempFile tempFile = tfService.findById(f);
+			if (tempFile == null) {
+				return new ResultVo(301, "文件不存在", "");
+			}
+			String size = tempFile.getSize();
+			if (!size.equals(p)) {
+				return new ResultVo(301, "参数错误", "");
+			}
+			remotePath = tempFile.getFilePath();
+			fileName = tempFile.getFileName();
+		} else {
+			return new ResultVo(301, "参数错误", "");
+		}
+		// 解决中文乱码
+		fileNameTemp = fileName;
+		try {
+			boolean isMSIE = HttpUtil.isMSBrowser(request);
+			if (isMSIE) {
+				//浏览器解决
+				fileNameTemp = URLEncoder.encode(fileNameTemp, "UTF-8");
+			} else {
+				// 万能解决
+				fileNameTemp = new String(fileNameTemp.getBytes("UTF-8"), "ISO-8859-1");
+			}
+			//
+			try {
+				// 读取输出流
+				OutputStream os = new BufferedOutputStream(response.getOutputStream());
+				response.setCharacterEncoding("utf-8");
+				// 设置返回类型为下载类型
+				// response.setContentType("multipart/form-data");
+				response.setContentType("application/octet-stream");
+				response.setHeader("Content-Disposition", "attachment;fileName=" + fileNameTemp);
+				if (FtpUtil.downloadFile("/" + remotePath, fileName, os)) {
+					// 输出文件流
+					os.flush();
+					os.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
+
 
 	@GetMapping("/api/showTempFile")
 	public ResultVo showTempFile(HttpSession session, HttpServletRequest request) {
@@ -101,7 +200,7 @@ public class FileController {
 	    * @return void    返回类型  
 	    * @throws
 	 */
-
+	// TODO: uuid最好作为判断的条件,防止出现遍历爆破的情况
 	@PostMapping("/api/uploadTempFile")
 	public ResultVo uploadTempFile(@RequestParam(value = "file") MultipartFile file, String url,
 			HttpServletRequest request, HttpSession session) {
@@ -184,4 +283,6 @@ public class FileController {
 		}
 		return new ResultVo(ExceptionMsg.FAILED);
 	}
+
+
 }

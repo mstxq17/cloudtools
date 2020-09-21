@@ -1,7 +1,7 @@
 package com.xq17.cloudtools.vo;
 
 public enum ExceptionMsg {
-	SUCCESS(200, "操作成功"), FAILED(301, "操作失败"), ErrorService(500, "服务器错误");
+	SUCCESS(200, "操作成功"), FAILED(301, "操作失败"), ErrorService(500, "服务器错误"), ExpireInfo(303, "凭证信息已过期");
 
 	private Integer code;
 	private String msg;

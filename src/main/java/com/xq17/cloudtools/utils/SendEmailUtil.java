@@ -52,15 +52,16 @@ public class SendEmailUtil {
 			
 			messageHelper.setTo(receiveEmail); //收件人邮箱
 			messageHelper.setFrom(sendEmail); // 发件人邮箱
-			messageHelper.setSubject("Snacks注册中心"); //邮件注册
+			messageHelper.setSubject("CloudTools注册中心"); // 邮件注册
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss EEE");
 			
 			//设置邮件正文
 			String text = "<!doctype html><html><head><meta charset=\"utf-8\"></head><body>";
-			text += "<p style=\"font-size:20px font-weight:bold\">尊敬的," + name +"</p>";
-			text += "<p style=\"text-indent:2em;font-size:20px;\">欢迎注册零食网,您本次的注册码为:<span  style=\"font-size:30px; font-weight: bold; color:red\">";
-			text += code + "</span> 3分钟之内有效,请尽快完成注册流程!</p>";
-			text += "<span style=\"font-size:18px; float:right; margin-right：20px\" >";
+			text += "<p style=\"font-size:20px;font-weight:bold\">尊敬的 " + name + " 用户</p>";
+			text += "<p style=\"text-indent:2em;font-size:19px;\">您好,欢迎您选择注册cloudTools,本次的注册码为:<br /></p><p style=\"text-align:center\">";
+			text += "<span  style=\"font-size:22px; font-weight: bold; color:red\">" + code
+					+ "</span></p><p style=\"text-indent:2em;font-size:23px;\">3分钟之内有效,请尽快完成注册流程!</p>";
+			text += "<span style=\"font-size:19px; float:right; margin-right：20px\" >";
 			text += sdf.format(new Date()) + "</span>";
 			text += "</body></html>";
 			messageHelper.setText(text, true);

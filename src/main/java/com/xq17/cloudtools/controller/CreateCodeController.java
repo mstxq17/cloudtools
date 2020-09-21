@@ -31,7 +31,7 @@ public class CreateCodeController {
 
 		// 获取验证码
 		String code = getRondomCode();
-		session.setAttribute("validateCode", code);
+		session.setAttribute("vCode", code);
 
 		// 创建验证码图片
 		BufferedImage image = this.getCodeImage(code, width, height);
