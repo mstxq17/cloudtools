@@ -330,7 +330,7 @@ function userLogin(){
 			layer.msg(rsp.msg, {icon:1});
 			if(rsp.data){
 				console.log(adminUrl);
-				var adminUrl =rsp.adminPath;
+				var adminUrl =rsp.data.adminPath;
 				location = adminUrl + "/index.html";
 			}else{
 				location = "user/index.html";

@@ -28,15 +28,16 @@
                         <form class="form-inline">
                             <div class="form-group">
                                 <label for="username">用户名:</label>
-                                <input type="text" name="username" class="form-control" placeholder="请输入用户名">
+                                <input type="text" id="userName" name="username" class="form-control" placeholder="请输入用户名">
                             </div>
                             <div class="form-group">
                                 <label for="email">邮箱:</label>
-                                <input type="text" name="email" class="form-control" placeholder="请输入用户名">
+                                <input type="text" id="email" name="email" class="form-control" placeholder="请输入用户名">
                             </div>
                             <div class="form-group">
                                 <label for="role">角色:</label>
-                                <select class="form-group">
+                                <select class="form-group" id="role">
+                                	<option value="">--用户类型--</option>
                                     <option value="0">普通用户</option>
                                     <option value="1">管理员</option>
                                 </select>
@@ -46,7 +47,7 @@
                                 <input type="text" id="start" class="form-control" name="start_date" placeholder="开始日期">-
                                 <input type="text" id="end" name="end_date" class="form-control" placeholder="结束日期">
                             </div>
-                            <button type="button" class="btn btn-success"> <i class="fa fa-search"></i> 搜索</button>
+                            <button type="button" class="btn btn-success" onclick="search()"> <i class="fa fa-search"></i> 搜索</button>
                         </form>
                     </div>
                 </div>
@@ -80,8 +81,10 @@
 <script src="asset/js/jquery.min.js?v=2.1.4"></script>
 <script src="asset/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="asset/js/content.min.js?v=1.0.0"></script>
+<script src="asset/js/qs.js"></script>
 <script src="asset/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 <script src="asset/js/plugins/layer/laydate/laydate.js"></script>
+<script src="asset/js/plugins/layer/layer.js"></script>
 <script src="asset/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
 <script src="asset/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script>
@@ -91,6 +94,18 @@ laydate.render({
 laydate.render({
     elem: '#end',
 });
+
+
+function formatDate(now) {
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var date = now.getDate();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+}
+    
 // 处理后台数据
 $(function() {
 
@@ -114,6 +129,7 @@ var TableInit = function() {
             method: 'post', //请求方式（*）
             dataType: "json", //返回类型
             // contentType: 'application/json,charset=utf-8',
+            contentType: 'application/x-www-form-urlencoded',
             toolbar: '#toolbar', //工具按钮用哪个容器
             striped: true, //是否显示行间隔色
             cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -160,34 +176,64 @@ var TableInit = function() {
                 }, {
                     field: 'imagePath',
                     align: 'center',
-                    title: '用户头像'
+                    title: '用户头像',
+                    formatter: function(value ,row ,index){
+                    	return '<img src="' + value +'" style="width:30px;height:30px">';
+                    }
                 }, {
                     field: 'registerTime',
                     align: 'center',
                     title: '注册时间',
-                    sortable : true
+                    sortable : true,
+                    formatter: function(value, row, index){
+                    	var date = new Date(value);
+                    	return formatDate(date);
+                    }
                 },
                 {
                     field: 'currentSize',
                     align: 'center',
-                    title: '仓库情况',
-                    sortable : true
+                    title: '仓库使用',
+                    sortable : true,
+                    formatter: function(value, row, index){
+                    	//console.log(row.maxSize);
+                    	return Math.ceil(value/row.maxSize)+ "%";
+                    }
                 },
                 {
                     field: 'maxSize',
                     align: 'center',
                     title: '容量',
-                    sortable : true
+                    sortable : true,
+                    formatter: function(value, row, index){
+                    	return (value/1024).toFixed(1)+"M";
+                    }
                 },
                 {
                     field: 'permission',
                     align: 'center',
                     title: '仓库权限',
+                    formatter: function(value, row, index){
+                    	if(value == 0){
+                    		return "可上传下载";
+                    	}else if(value == 1){
+                    		return "不可上传可下载";
+                    	}else{
+                    		return "不可上传下载";
+                    	}
+                    }
                 },
                 {
                     field: 'role',
                     align: 'center',
-                    title: '角色'
+                    title: '角色',
+                    formatter: function(value, row, index){
+                    	if( value == 0){
+                    		return "<font style='font-weight:500px;color: #5CC9F5'>普通用户</font>";
+                    	}else{
+                    		return "<font style='font-weight:500px;color: #FA0009'>管理员</font>";
+                    	}
+                    }
                 },
             ]
         });
@@ -195,16 +241,37 @@ var TableInit = function() {
 
     //得到查询的参数
     oTableInit.queryParams = function(params) {
+    	var userName = $.trim($("#userName").val());
+    	var email = $.trim($("#email").val());
+    	var role = $.trim($("#role").val());
+    	var start_date = $.trim($("#start").val());
+    	var end_date = $.trim($("#end").val());
+    	if(end_date != "" && end_date != undefined){
+    		// 处理时间查询的问题
+    		end_date += " 23:59:59";
+    	}
         var temp = { //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+        	userName: userName,
+        	email: email,
+        	role: role,
+        	start_date: start_date,
+        	end_date: end_date,
             limit: params.limit, //页面大小
             offset: params.offset, //页码
-            // departmentname: $("#txt_search_departmentname").val(),
-            // statu: $("#txt_search_statu").val()
+            
         };
-        return temp;
+        return qs.stringify(temp);
     };
     return oTableInit;
 };
+
+var userTable = TableInit();
+function search(){
+	var index = layer.load(2); 
+	$('#user-table').bootstrapTable('refresh',userTable.queryParams);
+	layer.close(index);
+	layer.msg("搜索完毕!", {icon:1, time:500});
+}
 
 
 var ButtonInit = function() {

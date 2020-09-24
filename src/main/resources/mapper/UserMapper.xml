@@ -134,8 +134,25 @@
     </update>
     
     <!-- 返回用户总数 -->
-    <select id="totalUser" resultType="Integer">
+    <select id="totalUser" resultType="Integer" parameterType="Map">
    	 	select count(userId) from user
+   	 	<where>
+    		<if test="userName !=null and userName!=''">
+    			and userName like concat("%",#{userName},"%") 
+    		</if>
+    		<if test="email !=null and email!=''">
+    			and email like concat("%",#{email},"%") 
+    		</if>
+    		<if test="role != null">
+    			and role = #{role}
+    		</if>
+    		<if test="start_date !=null and start_date !=''">
+    			 <![CDATA[ and registerTime >= str_to_date(#{start_date}, '%Y-%m-%d %H:%i:%s')]]>
+    		</if>
+    		<if test="end_date !=null and end_date !=''">
+    			 <![CDATA[ and registerTime <= str_to_date(#{start_date}, '%Y-%m-%d %H:%i:%s')]]>
+    		</if>
+    	</where>
     </select>
     
     <!-- 返回后台管理的用户信息 -->
@@ -152,14 +169,14 @@
     		<if test="role != null">
     			and role = #{role}
     		</if>
-    		<if test="start_date !=null and start_data !=''">
+    		<if test="start_date !=null and start_date !=''">
     			 <![CDATA[ and u.registerTime >= str_to_date(#{start_date}, '%Y-%m-%d %H:%i:%s')]]>
     		</if>
-    		<if test="end_date !=null and end_data !=''">
-    			 <![CDATA[ and u.registerTime <= str_to_date(#{start_date}, '%Y-%m-%d %H:%i:%s')]]>
+    		<if test="end_date !=null and end_date !=''">
+    			 <![CDATA[ and u.registerTime <= str_to_date(#{end_date}, '%Y-%m-%d %H:%i:%s')]]>
     		</if>
-    		<if test="page!= null and rows != null">
-    			order by userId asc limit #{page}, #{rows}
+    		<if test="offset != null and limit != null">
+    			order by userId asc limit #{offset}, #{limit}
     		</if>
     	</where>
     </select>

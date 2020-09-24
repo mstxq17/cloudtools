@@ -59,10 +59,10 @@ public class UserController {
 		if (code.equalsIgnoreCase(rightCode)) {
 			// 及时清空验证码
 			session.removeAttribute("vCode");
-			String adminPath = "admin.html";
+			String adminPath = "./admin";
 			User _user = userService.login(map);
 			Map<String, Object> rsp = new HashMap<String, Object>();
-			map.put("adminPath", adminPath);
+			rsp.put("adminPath", adminPath);
 			// 验证码正确
 			if (_user != null) {
 				if(_user.getRole() == 1) {

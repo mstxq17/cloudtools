@@ -3,6 +3,8 @@ package cloudtools;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,4 +43,12 @@ public class GithubTest {
 		}
 	}
 
+	@Test
+	public void Test1() {
+		int a = Integer.parseInt("1");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("a", "");
+		System.out.println(map.get("a") == "");
+		if
+	}
 }

@@ -66,7 +66,7 @@ public interface UserMapper {
 	    * @return Integer    返回类型  
 	    * @throws
 	 */
-	public Integer totalUser();
+	public Integer totalUser(Map<String, Object> map);
 
 	/**
 	 * 

@@ -44,5 +44,14 @@ public interface UserService {
 	 */
 	public Integer update(User user);
 	
+	/**
+	 * 
+	    * @Title: findUsers  
+	    * @Description: 返回后台用户管理所需要的信息
+	    * @param @param map
+	    * @param @return    参数  
+	    * @return Map<String,Object>    返回类型  
+	    * @throws
+	 */
 	public Map<String, Object> findUsers(Map<String, Object> map);
 }

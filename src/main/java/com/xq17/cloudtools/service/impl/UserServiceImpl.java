@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.xq17.cloudtools.bean.User;
 import com.xq17.cloudtools.mapper.UserMapper;
 import com.xq17.cloudtools.service.UserService;
+import com.xq17.cloudtools.utils.ParameterUtil;
 
 
 @Service
@@ -63,8 +64,8 @@ public class UserServiceImpl implements UserService {
 	public Map<String, Object> findUsers(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("total", userMapper.totalUser());
-		result.put("rows", userMapper.findUsers(map));
+		result.put("total", userMapper.totalUser(ParameterUtil.changeLimitParam(map)));
+		result.put("rows", userMapper.findUsers(ParameterUtil.changeLimitParam(map)));
 		return result;
 	}
 }
