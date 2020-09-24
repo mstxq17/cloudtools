@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xq17.cloudtools.mapper.TempFileMapper">
+  
+    <!-- 全部字段 -->
+    <sql id="allColumn">fileId, fileName, size, uploadTime, filePath, sessionId </sql>
+    
+    <select id="findById"  resultType="com.xq17.cloudtools.bean.TempFile">
+    	select
+    	<include refid="allColumn"></include>
+    	from temp_file
+    	<where>
+    		fileId = #{fileId}
+    	</where>
+    </select>
+    
+    <select id="findLastBySessionId"  resultType="com.xq17.cloudtools.bean.TempFile">
+    	select
+    	<include refid="allColumn"></include>
+    	from temp_file
+    	<where>
+    		sessionId = #{sessionId}
+    	</where>
+    	 order by uploadTime desc limit 0,1
+    </select>
+    
+    <insert id="insert">
+    	insert into temp_file
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+    		<include refid="allColumn"></include>
+    	</trim>
+    	<trim prefix="values ("  suffix=")" suffixOverrides=",">
+    		NULL, #{fileName}, #{size}, #{uploadTime}, #{filePath}, #{sessionId}
+    	</trim>
+    </insert>
+    
+    <delete id="deleteById" >
+    	delete from temp_file
+    	<where>
+    		fileId = #{fileId}
+    	</where>
+    </delete>
+        <sql id="commonsValue">
+        <if test="fileName != null and fileName != ''">
+                file_name = #{fileName},
+        </if>
+        <if test="size != null">
+                size = #{size},
+        </if>
+        <if test="uploadTime != null">
+                upload_time = #{uploadTime},
+        </if>
+        <if test="filePath != null and filePath != ''">
+                file_path = #{filePath},
+        </if>
+    </sql>
+    
+    <update id="update">
+    	update temp_file
+    	<set>
+    		<include refid="commonsValue"></include>
+    	</set> 
+    	<where>
+    		fileId = #{fileId}
+    	</where>
+    </update>
+    
+</mapper>

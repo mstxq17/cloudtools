@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>CloudTools - 云端空间站</title>
+    <meta name="keywords" content="CloudToos云端空间站致力于给专业人士带来极致贴切的服务">
+    <meta name="description" content="CloudToos云端空间站致力于给专业人士带来极致贴切的服务">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="asset/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="asset/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="asset/css/animate.min.css" rel="stylesheet">
+    <link href="asset/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="asset/css/my.css" rel="stylesheet">
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <div class="sidebar-brand">
+                                <a href="index.html">CLOUDTOOLS</a>
+                            </div>
+                            <div class="sidebar-user">
+                                <div class="sidebar-user-picture">
+                                    <a><img style="width: 50px;height: 50px" alt="image" src="asset/img/a1.jpg"></a>
+                                </div>
+                                <div class="sidebar-user-details">
+                                    <div class="user-name">xq17今天pwn了吗？</div>
+                                    <div class="user-role">
+                                        <p>普通用户</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="logo-element">
+                            <i class="fa fa-cloud" aria-hidden="true"></i>
+                        </div>
+                    </li>
+                    <li class="active">
+                        <a href="#">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">主页</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="system.html" data-index="0">
+                                    <i class="fa fa-gg-circle" aria-hidden="true"></i>系统状态
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-desktop"></i>
+                            <span class="nav-label">管理中心</span><span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="user-manage.html">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    用户管理
+                                </a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="contacts.html">
+                                   <i class="fa fa-cog" aria-hidden="true"></i>
+                                    系统设置
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="css_animation.html"><i class="fa fa-magic"></i>
+                            <span class="nav-label">网盘管理</span>
+                            <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="regexSetting.html">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                    文件上传
+                                </a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="regexSetting.html">
+                                    <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                                    文件管理器
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="tips.html">
+                            <i class="fa fa-file" aria-hidden="true"></i>
+                            <span class="nav-label">
+                                文件服务
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">云记录</span><span class="label label-warning pull-right">10</span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="httpLog.html">
+                                    <i class="fa fa-space-shuttle" aria-hidden="true"></i>HTTP记录
+                                    <span class="label label-warning pull-right">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="dnsLog.html"><i class="fa fa-rocket" aria-hidden="true"></i>DNS记录
+                                    <span class="label label-warning pull-right">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="regexSetting.html"><i class="fa fa-cog" aria-hidden="true"></i>解析规则
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="mailbox.html">
+                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                            <span class="nav-label">任务监控</span>
+                            <span class="label label-primary pull-right">10</span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="httpLog.html">
+                                    <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                                    添加任务
+                                </a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="dnsLog.html">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    监控记录
+                                    <span class="label label-warning pull-right">3</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="tips.html" id="tips">
+                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            <span class="nav-label">系统提示
+                                <span class="label label-success pull-right">50</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-copyright" aria-hidden="true"></i>
+                            <span class="nav-label">版本信息</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a href="javascript:void(0)">
+                                    Version 1.0</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li class="m-t-xs">
+                                    <div class="dropdown-messages-box">
+                                        <div class="media-body">
+                                            <small class="pull-right">1分钟前</small>
+                                            <strong><i class="fa fa-space-shuttle" aria-hidden="true"></i></strong> 接收到请求x.o0.pw的新记录
+                                            <br>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <div class="media-body">
+                                            <small class="pull-right">1分钟前</small>
+                                            <strong><i class="fa fa-eye" aria-hidden="true"></i></strong>
+                                            baidu.com监控状态有新的更新
+                                            <br>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <div class="media-body">
+                                            <small class="pull-right">1分钟前</small>
+                                            <strong><i class="fa fa-rocket" aria-hidden="true"></i></i></strong> 接收到i.o0.pw的新dns解析记录
+                                            <br>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a href="javascript:void(0)" onclick="$('#tips').click()">
+                                            <strong>查看所有</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="row content-tabs">
+                <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+                </button>
+                <nav class="page-tabs J_menuTabs">
+                    <div class="page-tabs-content">
+                        <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+                    </div>
+                </nav>
+                <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
+                </button>
+                <div class="btn-group roll-nav roll-right">
+                    <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                        <li class="J_tabShowActive"><a>定位当前选项卡</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+                        </li>
+                        <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="system.html" frameborder="0" data-id="index_v1.html" seamless></iframe>
+            </div>
+            <div class="footer">
+                <div class="footer-left">
+                    Copyright © 2020 <div class="bullet"></div> 版权所有 cloudtools pro v1.0 <div class="bullet"></div>
+                </div>
+                <div class="pull-right">
+                    一直在追求卓越&nbsp;
+                    开发者QQ: <a href="javascript:void(0)">154380808</a>
+                </div>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+        <!--右侧边栏开始-->
+        <div id="right-sidebar">
+            <div class="sidebar-container">
+                <ul class="nav nav-tabs navs-3">
+                    <li>
+                        <a data-toggle="tab" href="#tab-1">
+                            <i class="fa fa-gear"></i> 主题
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="skin-setttings">
+                            <div class="title">布局控制</div>
+                            <div class="setings-item">
+                                <span>收起左侧菜单</span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu">
+                                        <label class="onoffswitch-label" for="collapsemenu">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setings-item">
+                                <span>固定顶部</span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="fixednavbar" class="onoffswitch-checkbox" id="fixednavbar">
+                                        <label class="onoffswitch-label" for="fixednavbar">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setings-item">
+                                <span>
+                                    固定宽度
+                                </span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox" id="boxedlayout">
+                                        <label class="onoffswitch-label" for="boxedlayout">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="title">皮肤选择</div>
+                            <div class="setings-item default-skin nb">
+                                <span class="skin-name ">
+                                    <a href="#" class="s-skin-0">
+                                        默认皮肤
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="setings-item blue-skin nb">
+                                <span class="skin-name ">
+                                    <a href="#" class="s-skin-1">
+                                        蓝色主题
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="setings-item yellow-skin nb">
+                                <span class="skin-name ">
+                                    <a href="#" class="s-skin-3">
+                                        黄色/紫色主题
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="small-chat">
+                <span class="badge badge-warning pull-right">3</span>
+                <a class="open-small-chat right-sidebar-toggle" aria-expanded="false">
+                    <i class="fa fa-cogs"></i>
+                </a>
+            </div>
+        </div>
+        <script src="asset/js/jquery.min.js?v=2.1.4"></script>
+        <script src="asset/js/bootstrap.min.js?v=3.3.6"></script>
+        <script src="asset/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="asset/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="asset/js/plugins/layer/layer.min.js"></script>
+        <script src="asset/js/hplus.min.js?v=4.1.0"></script>
+        <script src="asset/js/contabs.min.js"></script>
+        <script src="asset/js/plugins/pace/pace.min.js"></script>
+</body>
+<!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:17:11 GMT -->
+
+</html>

@@ -1,0 +1,348 @@
+<!-- 
+    程序名称: cloudtools
+    程序功能: 前台功能展示
+    设计人员: xq17
+    设计时间: 2020-09-18 10:51:58
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <!-- 元信息 -->
+    <meta charset="UTF-8">
+    <meta name="Generator" content="Sublime_Text@">
+    <meta name="Author" content="xq17">
+    <meta name="KeyWords" content="study">
+    <meta name="Description" content="frontend study">
+    <!-- 设置http头部 -->
+    <meta name="http-equiv" content="text/html;" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- 标题 -->
+    <title>cloudtools-登录注册</title>
+    <script src="static/javascript/jquery-3.4.1.js"></script>
+    <script src="static/layer/layer.js"></script>
+    <script src="static/javascript/main.js"></script>
+    <script src="static/javascript/ajaxfileupload.js"></script>
+    <script src="static/javascript/axios.min.js"></script>
+    <script src="static/javascript/qs.js"></script>
+    <!-- link -->
+    <!-- 添加图标 -->
+    <link rel="stylesheet" type="text/css" href="static/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="static/css/upload-file.css">
+    <!-- css style -->
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card-temp">
+            <div class="card card-welcome is-show" id="welcome">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>
+                            <i class="fa fa-cloud" aria-hidden="true"></i>
+                            CloudTools
+                        </h2>
+                    </div>
+                    <div class="btn-wrap">
+                        <button class="btn btn-lg btn-register" data-target="register" onclick="changeCard(this)">注册</button>
+                        <br>
+                        <button class="btn btn-lg btn-login" data-target="login" onclick="changeCard(this)">登录</button>
+                    </div>
+                    <br />
+                    <div class="fa-wrap">
+                        <div class="fa-div">
+                            <p>快捷登录</p>
+                            <a class="badge btn-success" title="Githu第三方登录">
+                                <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <div class="fa-div">
+                            <p>临时文件</p>
+                            <a class="badge btn-success" title="上传临时文件" data-target="upload" onclick="changeCard(this)">
+                                <i class="fa fa-upload fa-lg" aria-hidden="true">
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 注册功能 -->
+            <div class="card card-register" id="register">
+                <div class="card-body">
+                    <h2 class="card-title">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i> Register
+                    </h2>
+                    <div class="form-group">
+                        <label>
+                            <input class="form-control" type="text"  id="userName" name="userName" placeholder="用户名" required="required" onkeyup="this.value=this.value.replace(/\s+/g,'')" />
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input class="form-control" id="password" name="password" type="password" placeholder="密码" required="required" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input id="code" class="form-control" type="text" placeholder="验证码" required="required" name="code" autocomplete="off" onkeyup="this.value=this.value.replace(/\s+/g,'')" />
+                        </label>
+                        <img id="btnSendCode" title="点击换一张" src="code?width=90&height=36" onclick="this.src=this.src+'&t='+new Date()">
+                    </div>
+                    <div class="form-group">
+                   		<label>
+                            <input class="form-control email" id="email" type="email" placeholder="邮箱" required="required" name="email" autocomplete="off" onkeyup="this.value=this.value.replace(/\s+/g,'')" />
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input class="form-control regcode" id="regCode" type="text" placeholder="邮箱注册码" required="required" name="regCode" autocomplete="off" onkeyup="this.value=this.value.replace(/\s+/g,'')" />
+                        </label>
+                       <div id="btnSendCode">
+                       	<input id="regRCode" type="button" class="btn btn-default" value="获取注册码" onclick="getRegCode()">
+                       </div>
+                    </div>
+                    <button class="btn btn-lg" type="submit" onclick="regUser()">注册</button>
+                    <button class="btn btn-back" data-target="welcome" onclick="changeCard(this)">
+                        <a title="返回页面">
+                            <i class="fa fa-chevron-left"></i>
+                        </a>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 登录功能 -->
+            <div class="card card-login" id="login">
+                <div class="card-body">
+                    <h2 class="card-title">用户登录</h2>
+                    <br><br>
+                    <div>
+                        <div class="form-group">
+                            <label>
+                                <input class="form-control" type="username" placeholder="用户名或邮箱" id="nameOrEmail" name="nameOrEmail" required="required" onkeyup="this.value=this.value.replace(/\s+/g,'')" />
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input class="form-control" type="password" placeholder="密码"  id="loginPassword" required="required" name="password" autocomplete="off" onkeyup="this.value=this.value.replace(/\s+/g,'')" />
+                            </label>
+                        </div>
+                        <div class="form-group">
+	                        <label>
+	                            <input id="myCode" class="form-control" type="text" placeholder="验证码" required="required" name="code" autocomplete="off" onkeyup="this.value=this.value.replace(/\s+/g,'')" />
+	                        </label>
+                        	<img id="btnLoginSendCode" title="点击换一张" src="code?width=90&height=36" onclick="this.src=this.src+'&t='+new Date()">
+                    	</div>
+                        <button class="btn btn-lg" type="submit" onclick="userLogin()">登录</button>
+                    </div>
+                    <br><br>
+                </div>
+                <button class="btn btn-back" data-target="welcome" onclick="changeCard(this)">
+                    <a title="返回页面">
+                        <i class="fa fa-chevron-left"></i>
+                    </a>
+                </button>
+            </div>
+
+            <!-- 临时文件上传功能 -->
+            <div class="card card-upload" id="upload">
+                <div class="card-body">
+                    <h4 class="card-title">临时单文件上传</h4>
+                    <br>
+                    <p>仅2小时有效</p><br>
+                    <form id="tempFile">
+                        <div class="form-group">
+                            <label>
+                                <input id="file_form_id" class="form-control" type="file" name="file" id="file" />
+                                <input class="form-control" type="hidden" id="url" name="url" />
+                            </label>
+                        </div>
+                        <button class="btn btn-lg btn-success" type="button" onclick="uploadTemp()">上传</button>
+                    </form>
+                    <br><br>
+                </div>
+                <button class="btn btn-back" data-target="welcome" onclick="changeCard(this)">
+                    <a title="返回页面">
+                        <i class="fa fa-chevron-left"></i>
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+function uploadTemp() {
+    if ($('#file').val() === "") {
+        alert("请选择文件！");
+        return;
+    }
+    var size = $("input[type=file]").get(0).files[0].size;
+    if (size > 10485760) {
+        alert("临时文件最大可上传10MB！");
+        return;
+    }
+
+    var location = window.location.href;
+    var strings = location.split("cloudtools");
+    var url = strings[0] + "cloudtools";
+    var index = layer.load(1);
+	$.ajaxFileUpload({
+		url: "file/api/uploadTempFile",
+		secureuri: false,
+		fileElementId: "file_form_id",
+		dataType: "json",
+		data: { url: url},
+		success: function(rt, status){
+			if(rt.code == 200){
+				layer.close(index);
+				layer.msg(rt.msg, {icon: 6}, function(){
+					window.location = "temp-file.html";
+				}); 
+			}else{
+				layer.close(index);
+				layer.msg(rt.msg, {icon: 5},function(){
+				});
+			};
+		},
+		error: function(rt, status, e){
+			layer.msg("服务器错误!", {icon: 5}, function(){
+			layer.close(index);
+			});
+		}
+	});
+}
+
+function getRegCode(){
+	var email = $("#email").val().trim();
+	var userName = $.trim($("#userName").val());
+	var code = $.trim($("#code").val());
+	console.log(email,userName,code);
+	//邮箱检验正则
+	var regex = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+	if(email=="" || !regex.test(email)){
+		layer.msg("邮箱为空或者检验不合格,请重新输入!",{time:1000, icon:2});
+		return;
+	}
+	if(userName == ""){
+		layer.msg("用户名不能为空!",{time:1000, icon:2});
+		return;
+	}
+	if(code == ""){
+		layer.msg("验证码不能为空!",{time:1000, icon:2});
+		return;
+	}
+	
+	// 不允许再次点击
+	index = layer.load(1);
+	$("#regRCode").addClass("disabled");
+	$("#regRCode").attr("disabled", "true");
+	$("#email").attr("readonly", "true");
+	axios.post("user/api/sendEmail", qs.stringify({code:code, email:email, userName:userName }))
+			.then(function (response){
+				layer.close(index);
+				rsp = response.data;
+				if(rsp.code == 200){
+					layer.msg(rsp.msg,{icon:1});
+					var time = 180;
+					var timeTask = setInterval(()=>{
+						if(time>0){
+							time--;
+							$("#regRCode").val("  "+time+"s");
+						}else{
+							$("#regRCode").removeClass("disabled").val("获取注册码");
+							$("#regRCode").removeAttr("disabled");
+							$("#email").removeAttr("readonly");
+							clearInterval(timeTask);
+						}
+					}, 1000);
+					return;
+				}else if(rsp.code == 501){
+					// 刷新验证码
+					$("#btnSendCode").click();
+				}
+				layer.msg(rsp.msg,{icon: 5});
+				$("#regRCode").removeClass("disabled")
+				$("#regRCode").removeAttr("disabled");
+				$("#email").removeAttr("readonly");
+				return;
+			})
+			.catch(function (error){
+				$("#regRCode").removeClass("disabled")
+				$("#regRCode").removeAttr("disabled");
+				$("#email").removeAttr("readonly");
+				layer.msg("请求服务器失败,请重试..");
+				layer.close(index);
+			});
+}
+function regUser(){
+	var email = $("#email").val().trim();
+	var userName = $.trim($("#userName").val());
+	var regCode = $.trim($("#regCode").val());
+	var password = $.trim($("#password").val());
+	
+	if(email == "" || userName == "" || regCode == "" || password ==""){
+		layer.msg("请完整填写字段内容!", {icon:2});
+		return;
+	}
+	axios.post("user/api/register",qs.stringify({
+		email:email,
+		userName: userName,
+		userName: userName,
+		password: password,
+		regCode: regCode
+		}))
+	.then(function (response){
+		rsp = response.data;
+		if(rsp.code == 200){
+			layer.msg(rsp.msg, {icon:1});
+			location = "/cloudtools";
+		}else{
+			layer.msg(rsp.msg, {icon:2});
+		}
+		// 刷新验证码
+		$("#btnSendCode").click();
+	})
+	.catch(function (error){
+		layer.msg("请求服务器出现异常!", {icon:2});
+	});
+	
+}
+
+function userLogin(){
+	var nameOrEmail = $.trim($("#nameOrEmail").val());
+	var password = $.trim($("#loginPassword").val());
+	var code = $.trim($("#myCode").val());
+	if(!nameOrEmail || !password || !code){
+		layer.msg("请填写完整所需内容文本框!", {icon:2, time:600});
+		return;
+	}
+	axios.post("user/api/login", qs.stringify({nameOrEmail:nameOrEmail, password:password, code:code}))
+	.then(function(response){
+		rsp = response.data;
+		console.log(rsp);
+		if(rsp.code == 200){
+			layer.msg(rsp.msg, {icon:1});
+			if(rsp.data){
+				console.log(adminUrl);
+				var adminUrl =rsp.adminPath;
+				location = adminUrl + "/index.html";
+			}else{
+				location = "user/index.html";
+			}
+		}else{
+			layer.msg(rsp.msg, {icon:2});
+		}
+		$("#btnLoginSendCode").click();
+	})
+	.catch(function(error){
+		console.log(error);
+	})
+}
+</script>
+</html>

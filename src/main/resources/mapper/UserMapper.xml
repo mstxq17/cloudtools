@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xq17.cloudtools.mapper.UserMapper">
+  
+    <!-- 全部字段 -->
+    <sql id="allColumn">userId, openId, fileStoreId, userName, email, password, registerTime, imagePath, role</sql>
+    <!-- 通用insert判断 -->
+    <sql id="insertColumn">
+    	<if test="openId != null and openId !=''">openId,</if>
+    	<if test="fileStoreId != null">fileStoreId,</if>
+    	<if test="userName != null and userName !=''">userName,</if>
+    	<if test="email != null and email !=''">email,</if>
+    	<if test="password != null and password!=''">password,</if>
+    	<if test="registerTime != null">registerTime,</if>
+    	<if test="imagePath != null and imagePath!=''">imagePath,</if>
+    	<if  test="role != null">role</if>
+    </sql>
+        <sql id="ivalueColumn">
+    	<if test="openId != null and openId !=''">
+    		#{openId},
+    	</if>
+    	<if test="fileStoreId != null">
+    		#{fileStoreId},
+    	</if>
+    	<if test="userName != null and userName !=''">
+    		#{userName},
+    	</if>
+    	<if test="email != null and email !=''">
+    		#{email},
+    	</if>
+    	<if test="password != null and password!=''">
+    		md5(#{password}),
+    	</if>
+    	<if test="registerTime != null">
+    		#{registerTime},
+    	</if>
+    	<if test="imagePath != null and imagePath!=''">
+    		#{imagePath},
+    	</if>
+    	<if  test="role != null">
+    		#{role}
+    	</if>
+    </sql>
+
+    <!--通用对User各个属性的值的非空判断-->
+    <sql id="commonsValue">
+        <if test="openId != null and openId != ''">
+                openId = #{openId},
+        </if>
+        <if test="fileStoreId != null">
+                fileStoreId = #{fileStoreId},
+        </if>
+        <if test="userName != null and userName != ''">
+                userName = #{userName},
+        </if>
+        <if test="email != null and email != ''">
+                email = #{email},
+        </if>
+        <if test="password != null and password != ''">
+                password = md5(#{password}),
+        </if>
+        <if test="registerTime != null">
+                registerTime = #{registerTime},
+        </if>
+        <if test="imagePath != null and imagePath != ''">
+                imagePath = #{imagePath},
+        </if>
+    </sql>
+    
+    <!-- 插入新用户 -->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="insertColumn" />
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="ivalueColumn"/>
+        </trim>
+    </insert>
+   
+    <!-- 通过username查询 -->
+    <select id="findByName" resultType="User" parameterType="String">
+    	select
+    	<include refid="allColumn"></include>
+    	from user
+    	<where>
+    		username = #{username}
+    	</where>
+    </select>
+    
+   	<!-- 通过email查询 -->
+    <select id="findByEmail" resultType="User" parameterType="String">
+    	select * from user
+    	<where>
+    		email = #{email}
+    	</where>
+    </select>
+
+   	<!-- 通过OpenId查询 -->
+    <select id="findByOpenId" resultType="User" parameterType="String">
+    	select *
+    	from user
+    	<where>
+    		openId = #{openId}
+    	</where>
+    </select>
+    
+   	<!-- 通过Id查询 -->
+    <select id="findByUserId" resultType="User" parameterType="Integer">
+    	select * from user
+    	<where>
+    		userId = #{userId}
+    	</where>
+    </select>    
+    
+    <!-- 通过邮箱或者用户名和密码进行登录检验 -->
+    <select id="login" resultType="User" parameterType="Map">
+    	select 
+    	<include refid="allColumn"></include>
+    	from user
+    	<where>
+    	(userName = #{nameOrEmail} or email = #{nameOrEmail}) and password = md5(#{password})
+    	</where>
+    </select>
+    
+    <update id="update">
+    	update user 
+    	<set>
+    		<include refid="commonsValue"></include>
+    	</set>
+    	<where>
+    		userId = #{userId}
+    	</where>
+    </update>
+    
+    <!-- 返回用户总数 -->
+    <select id="totalUser" resultType="Integer">
+   	 	select count(userId) from user
+    </select>
+    
+    <!-- 返回后台管理的用户信息 -->
+    <select id="findUsers" resultType="User" parameterType="Map">
+    	select u.userId, u.userName, u.email, u.imagePath, u.registerTime, role,s.currentSize, s.maxSize, s.permission from user u, file_store s 
+    	<where>
+    		u.userId = s.userId
+    		<if test="userName !=null and userName!=''">
+    			and u.userName like concat("%",#{userName},"%") 
+    		</if>
+    		<if test="email !=null and email!=''">
+    			and u.email like concat("%",#{email},"%") 
+    		</if>
+    		<if test="role != null">
+    			and role = #{role}
+    		</if>
+    		<if test="start_date !=null and start_data !=''">
+    			 <![CDATA[ and u.registerTime >= str_to_date(#{start_date}, '%Y-%m-%d %H:%i:%s')]]>
+    		</if>
+    		<if test="end_date !=null and end_data !=''">
+    			 <![CDATA[ and u.registerTime <= str_to_date(#{start_date}, '%Y-%m-%d %H:%i:%s')]]>
+    		</if>
+    		<if test="page!= null and rows != null">
+    			order by userId asc limit #{page}, #{rows}
+    		</if>
+    	</where>
+    </select>
+    
+</mapper>
