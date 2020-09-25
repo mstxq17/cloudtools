@@ -9,6 +9,17 @@
 	<name>cloudtools Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+		<!-- 快捷登录 -->
+		<dependency>
+	  		<groupId>me.zhyd.oauth</groupId>
+	 	 	<artifactId>JustAuth</artifactId>
+	  		<version>1.15.7</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.squareup.okhttp3</groupId>
+		  <artifactId>okhttp</artifactId>
+		  <version>4.4.1</version>
+		</dependency>
 		<!-- 单元测试依赖包 -->
 		<dependency>
 			<groupId>junit</groupId>

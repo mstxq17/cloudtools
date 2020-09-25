@@ -49,6 +49,5 @@ public class GithubTest {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("a", "");
 		System.out.println(map.get("a") == "");
-		if
 	}
 }

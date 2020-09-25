@@ -57,7 +57,7 @@
                     <div class="fa-wrap">
                         <div class="fa-div">
                             <p>快捷登录</p>
-                            <a class="badge btn-success" title="Githu第三方登录">
+                            <a class="badge btn-success" title="Githu第三方登录" onclick="fastLogin()">
                                 <i class="fa fa-github fa-lg" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -327,13 +327,16 @@ function userLogin(){
 		rsp = response.data;
 		console.log(rsp);
 		if(rsp.code == 200){
-			layer.msg(rsp.msg, {icon:1});
 			if(rsp.data){
 				console.log(adminUrl);
 				var adminUrl =rsp.data.adminPath;
-				location = adminUrl + "/index.html";
+				layer.msg(rsp.msg, {icon:1, time:1500},function(){
+					location = adminUrl + "/index.html";
+				});
 			}else{
-				location = "user/index.html";
+				layer.msg(rsp.msg, {icon:1, time:1500},function(){
+					location = "user/index.html";
+				});
 			}
 		}else{
 			layer.msg(rsp.msg, {icon:2});
@@ -343,6 +346,10 @@ function userLogin(){
 	.catch(function(error){
 		console.log(error);
 	})
+}
+
+function fastLogin(){
+	location.href = "oauth/render";
 }
 </script>
 </html>
